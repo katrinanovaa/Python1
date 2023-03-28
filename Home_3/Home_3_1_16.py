@@ -7,6 +7,17 @@
 # Input:   [10, 5, 7, 3, 3, 0, 5, 7, 2, 8], x = 20
 # Output:  -1
 
+#ПЕРВОЕ РЕШЕНИЕ 
+
 elements = [10, 5, 7, 3, 3, 0, 5, 7, 2, 8]
-#vvod_number = int(input("Введите число, которое нужно найти: "))
-print(elements.count(int(input("введите число: "))) if elements.count() > 1 else -1)
+vvod_number = int(input("Введите число, которое нужно найти: "))
+count = 0
+for el in elements:
+    if el == vvod_number:
+        count += 1
+print(count if count>0 else -1 )        
+
+
+#ВТОРОЕ РЕШЕНИЕ
+# elements = [10, 5, 7, 3, 3, 0, 5, 7, 2, 8]
+# print(elements.count(int(input("введите число: "))) if elements.count() > 0 else -1)
