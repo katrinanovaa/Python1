@@ -38,47 +38,20 @@ def read (db: dict, surname_filter: str)-> int: #выдает список кл�
     for _id in db:
         if surname_filter.lower() in db[_id]['Surname'].lower():
             return _id
-        
-# def update
-#             surname = view.surname()
-#             recs = model.select(phone_book_main, surname)
-#             if recs:
-#                 idx = phone_book_main.index(recs[0])
-#                 rec = model.create_rec(*view.new_rec(mode = "update"))
-#                 rec = model.merge(rec, recs[0])
-#                 phone_book_main[idx] = rec
 
-
-# def delete_contact(db: dict, surname: str):
-#     results = read(db, get_surname())
-#     if len(results) > 1:
-#         print('Найдено несколько контактов')
-#         idx = int(input('Выберите номер контакта для удаления: '))
-#         data = results[idx]
-#     else:
-#         data = results[0]
-#     print(f'Выбран контакт для удаления: {data[0]} {data[1]} {data[2]}: {data[3]}')
-#     db.remove(data)
-#     export_db(data)
-#     print('Контакт удален')
-
-def delete_data(db: dict, surname: str):      
-    surname = get_surname()
-    recs = read(db, surname)
+def delete(db: dict) -> None:
+    recs = read(db, get_surname())
+    # print(recs)
     if recs:
-        idx = db.index(recs[0])
-        db.pop(idx)
-
-
-
-        # elif choice == "d":
-        #     surname = view.surname()
-        #     recs = model.select(phone_book_main, surname)
-        #     if recs:
-        #         idx = phone_book_main.index(recs[0])
-        #         phone_book_main.pop(idx)
-
-
+        db.pop(recs)
+    
+def update(db: dict)-> str:
+    recs = read(db, get_surname())
+    print()        
+    print("Искомый контакт: ")
+    print_record(db, recs)
+    record = get_user_data()
+    db, recs = create(db, recs, *record)
 
 
 def print_record(db:dict, _id:int)-> str:
@@ -136,8 +109,10 @@ def menu(db: dict, last_id: int)-> int:
         print("3. Экспортировать данные в файл: ")
         print("4. Импортировать данные из файла")
         print("5. Найти пользователя: ")
-        print("6. Удалить пользователя: ")
-        print("7. Выход")
+        print("6. Изменение пользователя")
+        print("7. Удаление пользователя")
+        print("8. Выход")
+
         user_input = input("Введите действие > ")
         if user_input == "1":
             record = get_user_data()
@@ -155,12 +130,10 @@ def menu(db: dict, last_id: int)-> int:
                 print_record(db, found_id)
             except KeyError:
                 print(f'{"="*30}\n Запись не найдена!\n{"="*30}')
-        # elif user_input == "6":
-        #     surname = get_surname()
-        #     recs = read(db, surname)
-        #     if recs:
-        #         index = db._id(recs[0])
-        #         db.pop(index)
+        elif user_input == "6":
+            update(db)
+        elif user_input == "7":
+            delete(db)
         else:
             break
         
